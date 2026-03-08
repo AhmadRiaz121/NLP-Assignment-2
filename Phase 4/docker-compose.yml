@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  chiron-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chiron-ai
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount your models directory
+      - ../models:/models:ro
+    environment:
+      MODEL_DIR: /models
+      MAX_TOKENS: "512"
+      TEMPERATURE: "0.7"
+      TOP_P: "0.9"
+      CONTEXT_SIZE: "8000"
+      N_THREADS: "4"
+      N_GPU_LAYERS: "0"   # set >0 if using CUDA
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 90s
+      retries: 3

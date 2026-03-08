@@ -1,0 +1,360 @@
+{
+  "info": {
+    "name": "Chiron-AI Hotel Assistant API",
+    "_postman_id": "chiron-ai-hotel-api-v1",
+    "description": "Phase 4 — Microservice API test collection for the Grand Stay Hotel virtual front-desk assistant.\n\nBase URL: http://localhost:8000\nWebSocket: ws://localhost:8000/ws/chat\n\nRun the server with:\n  uvicorn api.main:app --host 0.0.0.0 --port 8000\nor:\n  docker compose up",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "ws_url",
+      "value": "ws://localhost:8000/ws/chat",
+      "type": "string"
+    },
+    {
+      "key": "session_id",
+      "value": "",
+      "type": "string",
+      "description": "Set automatically by the Create Session test."
+    }
+  ],
+  "item": [
+    {
+      "name": "1 — Health & Ops",
+      "item": [
+        {
+          "name": "Health Check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('Status is ok or degraded', () => {",
+                  "    pm.expect(['ok', 'degraded']).to.include(body.status);",
+                  "});",
+                  "pm.test('model_name present', () => {",
+                  "    pm.expect(body.model_name).to.be.a('string');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Returns model load status, active session count, and model name."
+          },
+          "response": [
+            {
+              "name": "200 OK — model loaded",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"status\": \"ok\",\n  \"model_loaded\": true,\n  \"active_sessions\": 0,\n  \"model_name\": \"Qwen2.5-1.5B-Instruct\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "OpenAPI Docs (Swagger UI)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/docs",
+              "host": ["{{base_url}}"],
+              "path": ["docs"]
+            },
+            "description": "Interactive Swagger UI. Open in a browser."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 — Session Management (REST)",
+      "item": [
+        {
+          "name": "Create Session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test('session_id returned', () => {",
+                  "    pm.expect(body.session_id).to.be.a('string');",
+                  "});",
+                  "// Save session_id for subsequent requests",
+                  "pm.collectionVariables.set('session_id', body.session_id);",
+                  "console.log('Session ID saved:', body.session_id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"]
+            },
+            "description": "Creates a new guest session. The returned session_id is saved to the collection variable for use in subsequent requests."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"session_id\": \"a1b2c3d4\",\n  \"message\": \"Session created. Connect to /ws/chat to begin.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "List All Sessions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('session_ids is array', () => {",
+                  "    pm.expect(body.session_ids).to.be.an('array');",
+                  "});",
+                  "pm.test('count is a number', () => {",
+                  "    pm.expect(body.count).to.be.a('number');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"]
+            }
+          }
+        },
+        {
+          "name": "Get Session Stats",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200 or 404', () => {",
+                  "    pm.expect([200, 404]).to.include(pm.response.code);",
+                  "});",
+                  "if (pm.response.code === 200) {",
+                  "    const body = pm.response.json();",
+                  "    pm.test('session_id matches', () => {",
+                  "        pm.expect(body.session_id).to.equal(pm.collectionVariables.get('session_id'));",
+                  "    });",
+                  "    pm.test('turn_count present', () => {",
+                  "        pm.expect(body.turn_count).to.be.a('number');",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions/{{session_id}}/stats",
+              "host": ["{{base_url}}"],
+              "path": ["sessions", "{{session_id}}", "stats"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"session_id\": \"a1b2c3d4\",\n  \"turn_count\": 3,\n  \"last_intent\": \"reservation\",\n  \"total_stored\": 6,\n  \"sent_to_llm\": 6,\n  \"filtered_out\": 0,\n  \"age_seconds\": 45.2\n}"
+            },
+            {
+              "name": "404 Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"detail\": \"Session 'xxxxxxxx' not found.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 204 or 404', () => {",
+                  "    pm.expect([204, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["sessions", "{{session_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Nonexistent Session (expect 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));",
+                  "const body = pm.response.json();",
+                  "pm.test('detail present', () => {",
+                  "    pm.expect(body.detail).to.be.a('string');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions/notexist/stats",
+              "host": ["{{base_url}}"],
+              "path": ["sessions", "notexist", "stats"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 — WebSocket Chat",
+      "item": [
+        {
+          "name": "WS — Reservation Intent",
+          "request": {
+            "method": "WEBSOCKET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"message\": \"I want to book a double room for 2 nights starting July 10th.\"}"
+            },
+            "url": {
+              "raw": "{{ws_url}}",
+              "host": ["{{ws_url}}"]
+            },
+            "description": "Connect, receive SessionCreated frame, send a reservation request.\n\nExpected frames back:\n1. {\"type\": \"session_created\", \"session_id\": \"...\", \"welcome\": \"...\"}\n2. {\"type\": \"token\", \"content\": \"...\"} × N\n3. {\"type\": \"done\", \"intent\": \"reservation\", ...}"
+          }
+        },
+        {
+          "name": "WS — Off-Topic Guard",
+          "request": {
+            "method": "WEBSOCKET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"message\": \"What is the weather forecast for tomorrow?\"}"
+            },
+            "url": {
+              "raw": "{{ws_url}}",
+              "host": ["{{ws_url}}"]
+            },
+            "description": "Should receive the off-topic redirect reply without the model being called.\n\nExpected frames:\n1. {\"type\": \"session_created\", ...}\n2. {\"type\": \"token\", \"content\": \"I'm Chiron-AI...\"} (single frame, no LLM call)\n3. {\"type\": \"done\", \"intent\": \"off_topic\", ...}"
+          }
+        },
+        {
+          "name": "WS — Complaint + Escalation",
+          "request": {
+            "method": "WEBSOCKET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"message\": \"My room's air conditioning is completely broken. I want to speak to a manager.\"}"
+            },
+            "url": {
+              "raw": "{{ws_url}}",
+              "host": ["{{ws_url}}"]
+            },
+            "description": "Tests complaint + escalation combined intent. Expect the model to acknowledge the issue and offer to transfer."
+          }
+        },
+        {
+          "name": "WS — FAQ: Pool Hours",
+          "request": {
+            "method": "WEBSOCKET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"message\": \"What time does the pool close tonight?\"}"
+            },
+            "url": {
+              "raw": "{{ws_url}}",
+              "host": ["{{ws_url}}"]
+            },
+            "description": "FAQ intent. Model should state outdoor pool closes 9 PM and indoor closes 10 PM."
+          }
+        },
+        {
+          "name": "WS — Multi-Turn Conversation",
+          "request": {
+            "method": "WEBSOCKET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"message\": \"I'd like to make a reservation.\"}\n---\n{\"message\": \"Check-in July 15, check-out July 18.\"}\n---\n{\"message\": \"A junior suite for 2 guests.\"}\n---\n{\"message\": \"My name is Alice Nguyen, alice@example.com\"}\n---\n{\"message\": \"Yes, please confirm.\"}"
+            },
+            "url": {
+              "raw": "{{ws_url}}",
+              "host": ["{{ws_url}}"]
+            },
+            "description": "Send the messages one at a time over the same WebSocket connection. Each line separated by --- is a separate send event.\n\nThe model should ask follow-up questions over multiple turns before confirming the reservation."
+          }
+        },
+        {
+          "name": "WS — Invalid JSON (expect error frame)",
+          "request": {
+            "method": "WEBSOCKET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "this is not valid json at all"
+            },
+            "url": {
+              "raw": "{{ws_url}}",
+              "host": ["{{ws_url}}"]
+            },
+            "description": "Send malformed JSON. Expect an ErrorMessage frame with code 'invalid_request'. Connection should stay open."
+          }
+        }
+      ]
+    }
+  ]
+}

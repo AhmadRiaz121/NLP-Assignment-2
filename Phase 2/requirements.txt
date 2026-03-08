@@ -1,0 +1,8 @@
+# Phase 2 — LLM Engine Dependencies
+# Install with: pip install -r requirements.txt
+
+llama-cpp-python>=0.2.90    # llama.cpp Python bindings (CPU build)
+# For GPU (CUDA) build use:
+# CMAKE_ARGS="-DLLAMA_CUDA=on" pip install llama-cpp-python
+
+huggingface-hub>=0.22.0     # Download GGUF model from HuggingFace
