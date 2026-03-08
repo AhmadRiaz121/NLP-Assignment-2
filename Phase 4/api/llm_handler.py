@@ -31,7 +31,7 @@ MODEL_NAME="Qwen2.5-1.5B-Instruct"
 MAX_TOKENS=int(os.getenv("MAX_TOKENS",   "512"))
 TEMPERATURE=float(os.getenv("TEMPERATURE", "0.7"))
 TOP_P=float(os.getenv("TOP_P",       "0.9"))
-CONTEXT_SIZE=int(os.getenv("CONTEXT_SIZE", "8000"))
+CONTEXT_SIZE=int(os.getenv("CONTEXT_SIZE", "32768"))
 N_THREADS=int(os.getenv("N_THREADS",    "4"))
 N_GPU_LAYERS=int(os.getenv("N_GPU_LAYERS", "0"))   # CPU mode
 
