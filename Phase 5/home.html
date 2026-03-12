@@ -1,859 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grand Stay Hotel &middot; Welcome</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --terracotta:      #c1694f;
-      --terracotta-light:#d4845f;
-      --terracotta-pale: #f0ddd4;
-      --sand:            #f5f0e8;
-      --sand-dark:       #ebe4d8;
-      --linen:           #faf7f2;
-      --sage:            #8b956d;
-      --sage-light:      #a8ac8c;
-      --warm-brown:      #8b6f47;
-      --earth-dark:      #3d342b;
-      --earth-slate:     #5a4f45;
-      --earth-muted:     #9c8b7a;
-      --earth-border:    #d9cec1;
-      --shadow-xl:       0 20px 60px rgba(61,52,43,0.12), 0 8px 30px rgba(61,52,43,0.08);
-      --shadow-md:       0 8px 24px rgba(61,52,43,0.10);
-      --shadow-sm:       0 2px 8px rgba(61,52,43,0.08);
-      --font-body:       'Inter', system-ui, -apple-system, sans-serif;
-      --font-display:    'Playfair Display', Georgia, serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    html, body {
-      min-height: 100%;
-      font-family: var(--font-body);
-      color: var(--earth-dark);
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-
-    body {
-      background: var(--sand);
-      position: relative;
-    }
-
-    /* Transparent Background Image */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(rgba(245, 240, 232, 0.85), rgba(235, 228, 216, 0.85)),
-        url('data:image/svg+xml,%3Csvg width="400" height="400" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3CfeColorMatrix type="saturate" values="0"/%3E%3C/filter%3E%3ClinearGradient id="grad1" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%238b6f47;stop-opacity:0.03" /%3E%3Cstop offset="50%25" style="stop-color:%23c1694f;stop-opacity:0.05" /%3E%3Cstop offset="100%25" style="stop-color:%238b956d;stop-opacity:0.03" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23grad1)"/%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.4"/%3E%3C/svg%3E');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Animated background elements */
-    .bg-pattern {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.04;
-      background-image: 
-        radial-gradient(circle at 20% 30%, var(--terracotta) 1px, transparent 1px),
-        radial-gradient(circle at 80% 70%, var(--sage) 1px, transparent 1px),
-        radial-gradient(circle at 50% 50%, var(--warm-brown) 1px, transparent 1px);
-      background-size: 80px 80px, 60px 60px, 100px 100px;
-      animation: pattern-drift 60s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes pattern-drift {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(100px, 100px); }
-    }
-
-    .glow-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.12;
-      pointer-events: none;
-      animation: float 20s ease-in-out infinite;
-    }
-
-    .glow-1 {
-      width: 400px;
-      height: 400px;
-      background: linear-gradient(135deg, var(--terracotta), var(--terracotta-light));
-      top: -100px;
-      right: -100px;
-      animation-delay: 0s;
-    }
-
-    .glow-2 {
-      width: 350px;
-      height: 350px;
-      background: linear-gradient(225deg, var(--sage), var(--sage-light));
-      bottom: -80px;
-      left: -80px;
-      animation-delay: 7s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -30px) scale(1.1); }
-      66% { transform: translate(-30px, 30px) scale(0.9); }
-    }
-
-    /* Hero Section with Background */
-    .hero-section {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: linear-gradient(135deg, rgba(245, 240, 232, 0.95) 0%, rgba(235, 228, 216, 0.93) 100%);
-    }
-
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 100 0 L 0 0 0 100" fill="none" stroke="%23c1694f" stroke-width="0.5" opacity="0.15"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23grid)"/%3E%3C/svg%3E');
-      opacity: 0.35;
-      animation: bg-pan 60s linear infinite;
-    }
-
-    @keyframes bg-pan {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 100% 100%; }
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(245, 240, 232, 0.4) 100%);
-      pointer-events: none;
-    }
-
-    /* Main container */
-    .container {
-      position: relative;
-      width: 100%;
-      max-width: 1200px;
-      padding: 60px 20px;
-      z-index: 1;
-    }
-
-    /* Hotel logo and branding */
-    .hero {
-      text-align: center;
-      animation: fadeInUp 1s ease-out;
-      margin-bottom: 80px;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hotel-crest {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 32px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, var(--terracotta), var(--terracotta-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--linen);
-      font-family: var(--font-display);
-      font-size: 3rem;
-      font-weight: 900;
-      box-shadow: var(--shadow-xl);
-      position: relative;
-      animation: fadeInUp 1s ease-out 0.2s backwards;
-    }
-
-    .hotel-crest::before {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 26px;
-      background: linear-gradient(135deg, var(--terracotta), var(--terracotta-light));
-      opacity: 0.3;
-      filter: blur(12px);
-      z-index: 0;
-    }
-
-    .hotel-crest::after {
-      content: 'GS';
-      position: relative;
-      z-index: 2;
-    }
-
-    .hotel-name {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--earth-dark);
-      line-height: 1.2;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
-      animation: fadeInUp 1s ease-out 0.3s backwards;
-    }
-
-    .hotel-tagline {
-      font-size: 1.1rem;
-      color: var(--earth-muted);
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      animation: fadeInUp 1s ease-out 0.4s backwards;
-    }
-
-    .divider {
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--terracotta-light), transparent);
-      margin: 28px auto;
-      border-radius: 2px;
-      animation: fadeInUp 1s ease-out 0.5s backwards;
-    }
-
-    .hero-description {
-      font-size: 1.1rem;
-      color: var(--earth-slate);
-      line-height: 1.8;
-      max-width: 560px;
-      margin: 0 auto 48px;
-      animation: fadeInUp 1s ease-out 0.6s backwards;
-    }
-
-    /* CTA Button */
-    .cta-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 48px;
-      font-family: var(--font-body);
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--linen);
-      background: linear-gradient(135deg, var(--terracotta), var(--terracotta-light));
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 8px 30px rgba(193, 105, 79, 0.35);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      animation: fadeInUp 1s ease-out 0.7s backwards;
-    }
-
-    .cta-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .cta-button:hover::before {
-      left: 100%;
-    }
-
-    .cta-button:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 12px 40px rgba(193, 105, 79, 0.45);
-    }
-
-    .cta-button:active {
-      transform: translateY(0) scale(0.98);
-    }
-
-    .cta-icon {
-      width: 20px;
-      height: 20px;
-      transition: transform 0.3s;
-    }
-
-    .cta-button:hover .cta-icon {
-      transform: translateX(4px);
-    }
-
-    /* Quick Services Preview */
-    .quick-services {
-      text-align: center;
-      padding: 8px 0;
-      animation: fadeInUp 1s ease-out 0.8s backwards;
-    }
-
-    .services-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--earth-muted);
-      margin-bottom: 16px;
-    }
-
-    /* Features grid */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 20px;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .feature-card {
-      background: rgba(250, 247, 242, 0.7);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(217, 206, 193, 0.6);
-      border-radius: 16px;
-      padding: 24px 20px;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    .feature-card:hover {
-      background: rgba(250, 247, 242, 0.95);
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 12px 32px rgba(61,52,43,0.15);
-      border-color: var(--terracotta-light);
-    }
-
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 12px;
-    }
-
-    .feature-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--earth-dark);
-      line-height: 1.4;
-    }
-
-    /* Content Sections */
-    .content-section {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    .content-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section-wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px 20px;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--earth-dark);
-      text-align: center;
-      margin-bottom: 20px;
-      letter-spacing: -0.02em;
-    }
-
-    .section-subtitle {
-      font-size: 1.1rem;
-      color: var(--earth-muted);
-      text-align: center;
-      margin-bottom: 60px;
-      line-height: 1.7;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* About Section */
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      margin-top: 60px;
-    }
-
-    .about-card {
-      background: var(--linen);
-      border-radius: var(--radius);
-      padding: 40px 32px;
-      box-shadow: var(--shadow-xl);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid var(--earth-border);
-    }
-
-    .about-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 24px 60px rgba(61,52,43,0.18);
-      border-color: var(--terracotta-light);
-    }
-
-    .about-icon {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, var(--terracotta-pale), var(--sand));
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      margin-bottom: 24px;
-    }
-
-    .about-card-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--earth-dark);
-      margin-bottom: 12px;
-    }
-
-    .about-card-text {
-      font-size: 0.95rem;
-      color: var(--earth-slate);
-      line-height: 1.7;
-    }
-
-    /* Testimonials */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-      margin-top: 60px;
-    }
-
-    .testimonial-card {
-      background: var(--linen);
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--earth-border);
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .testimonial-card::before {
-      content: '"';
-      position: absolute;
-      top: 16px;
-      left: 24px;
-      font-family: var(--font-display);
-      font-size: 6rem;
-      color: var(--terracotta-pale);
-      line-height: 1;
-      z-index: 0;
-    }
-
-    .testimonial-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .testimonial-text {
-      position: relative;
-      z-index: 1;
-      font-size: 0.95rem;
-      color: var(--earth-slate);
-      line-height: 1.8;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    .testimonial-author {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .testimonial-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--terracotta), var(--terracotta-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--linen);
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .testimonial-info {
-      flex: 1;
-    }
-
-    .testimonial-name {
-      font-weight: 600;
-      color: var(--earth-dark);
-      font-size: 0.9rem;
-    }
-
-    .testimonial-location {
-      font-size: 0.8rem;
-      color: var(--earth-muted);
-    }
-
-    /* CTA Section */
-    .cta-section {
-      text-align: center;
-      padding: 120px 20px;
-      background: linear-gradient(135deg, var(--terracotta-pale) 0%, var(--sand) 100%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(193, 105, 79, 0.12) 0%, transparent 70%);
-      animation: rotate 30s linear infinite;
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .cta-content {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .cta-title {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--earth-dark);
-      margin-bottom: 20px;
-      letter-spacing: -0.02em;
-    }
-
-    .cta-text {
-      font-size: 1.2rem;
-      color: var(--earth-slate);
-      line-height: 1.7;
-      margin-bottom: 40px;
-    }
-
-    /* Footer */
-    .footer {
-      padding: 40px 20px;
-      font-size: 0.75rem;
-      color: var(--earth-muted);
-      text-align: center;
-      background: var(--sand-dark);
-      border-top: 1px solid var(--earth-border);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hotel-name {
-        font-size: 2.5rem;
-      }
-
-      .hotel-tagline {
-        font-size: 0.9rem;
-      }
-
-      .hero-description {
-        font-size: 1rem;
-        margin-bottom: 36px;
-      }
-
-      .cta-button {
-        padding: 16px 40px;
-        font-size: 1rem;
-      }
-
-      .features {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-
-      .section-title {
-        font-size: 2rem;
-      }
-
-      .cta-title {
-        font-size: 2.2rem;
-      }
-
-      .section-wrapper {
-        padding: 80px 20px;
-      }
-
-      .cta-section {
-        padding: 80px 20px;
-      }
-
-      .glow-orb {
-        display: none;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hotel-crest {
-        width: 90px;
-        height: 90px;
-        font-size: 2.2rem;
-        margin-bottom: 24px;
-      }
-
-      .hotel-name {
-        font-size: 2rem;
-      }
-
-      .features {
-        grid-template-columns: 1fr;
-      }
-
-      .section-title {
-        font-size: 1.8rem;
-      }
-
-      .cta-title {
-        font-size: 1.8rem;
-      }
-
-      .about-grid,
-      .testimonials-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="bg-pattern"></div>
-  <div class="glow-orb glow-1"></div>
-  <div class="glow-orb glow-2"></div>
-
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="container">
-      <div class="hero">
-        <div class="hotel-crest"></div>
-        <h1 class="hotel-name">Grand Stay Hotel</h1>
-        <p class="hotel-tagline">Where Luxury Meets Hospitality</p>
-        <div class="divider"></div>
-        <p class="hero-description">
-          Experience exceptional service with Chiron-AI, your personal virtual concierge available 24/7. 
-          From reservations to room service, we're here to make your stay unforgettable.
-        </p>
-        
-        <a href="index.html" class="cta-button">
-          <span>Chat with Chiron-AI</span>
-          <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="quick-services">
-        <div class="services-label">Available Services</div>
-        <div class="features">
-          <div class="feature-card">
-            <div class="feature-icon">🛏️</div>
-            <div class="feature-label">Room Reservations</div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🔑</div>
-            <div class="feature-label">Check-in & Check-out</div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🍽️</div>
-            <div class="feature-label">Room Service</div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🏊</div>
-            <div class="feature-label">Amenities & Spa</div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🌟</div>
-            <div class="feature-label">Concierge Services</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section class="content-section" data-section="about">
-    <div class="section-wrapper">
-      <h2 class="section-title">Experience Grand Stay</h2>
-      <p class="section-subtitle">
-        Discover a world of luxury where every detail is thoughtfully crafted to ensure your comfort and satisfaction.
-      </p>
-      <div class="about-grid">
-        <div class="about-card">
-          <div class="about-icon">✨</div>
-          <h3 class="about-card-title">Luxury Accommodation</h3>
-          <p class="about-card-text">
-            Elegantly appointed rooms and suites with premium amenities, breathtaking views, and personalized service that exceeds expectations.
-          </p>
-        </div>
-        <div class="about-card">
-          <div class="about-icon">🤖</div>
-          <h3 class="about-card-title">AI-Powered Service</h3>
-          <p class="about-card-text">
-            Meet Chiron-AI, your intelligent virtual concierge available 24/7 to assist with reservations, recommendations, and instant support.
-          </p>
-        </div>
-        <div class="about-card">
-          <div class="about-icon">🌍</div>
-          <h3 class="about-card-title">Prime Location</h3>
-          <p class="about-card-text">
-            Situated in the heart of the city, providing easy access to cultural landmarks, fine dining, and exclusive shopping experiences.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="content-section" data-section="testimonials">
-    <div class="section-wrapper">
-      <h2 class="section-title">Guest Experiences</h2>
-      <p class="section-subtitle">
-        Hear what our distinguished guests have to say about their memorable stays at Grand Stay Hotel.
-      </p>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <p class="testimonial-text">
-            The level of service at Grand Stay is unparalleled. Chiron-AI made everything so seamless, from booking spa treatments to restaurant recommendations. A truly modern luxury experience.
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">SM</div>
-            <div class="testimonial-info">
-              <div class="testimonial-name">Sarah Mitchell</div>
-              <div class="testimonial-location">London, UK</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <p class="testimonial-text">
-            Exceptional attention to detail and the AI concierge is brilliant! It understood exactly what I needed and provided instant assistance at any hour. Will definitely return.
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">JC</div>
-            <div class="testimonial-info">
-              <div class="testimonial-name">James Chen</div>
-              <div class="testimonial-location">Singapore</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <p class="testimonial-text">
-            From check-in to check-out, everything was perfect. The rooms are stunning, the staff is wonderful, and having Chiron-AI available 24/7 made my business trip effortless.
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">ER</div>
-            <div class="testimonial-info">
-              <div class="testimonial-name">Elena Rodriguez</div>
-              <div class="testimonial-location">Barcelona, Spain</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="cta-content">
-      <h2 class="cta-title">Ready to Experience Grand Stay?</h2>
-      <p class="cta-text">
-        Let Chiron-AI guide you through our services and help make your stay extraordinary.
-      </p>
-      <a href="index.html" class="cta-button">
-        <span>Start Your Journey</span>
-        <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </section>
-
-  <footer class="footer">
-    &copy; 2026 Grand Stay Hotel &middot; Powered by Chiron-AI &middot; All Rights Reserved
-  </footer>
-
-  <script>
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c1694f",
+                        "primary-light": "#d4845f",
+                        "background-light": "#faf7f2",
+                        "background-dark": "#3d342b",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
         }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.content-section').forEach(section => {
-      observer.observe(section);
-    });
-  </script>
-</body>
-</html>
+    </script>
+<title>Grand Stay Hotel | Where Comfort Meets Distinction</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-300">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">apartment</span>
+</div>
+<h1 class="text-xl font-extrabold tracking-tighter uppercase">Grand Stay</h1>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Accommodations</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Dining</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Wellness</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Experience</a>
+</nav>
+<div class="flex items-center gap-4">
+<a href="index.html" class="hidden sm:flex bg-primary text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:brightness-110 transition-all uppercase tracking-wider">
+                        AI Concierge
+                    </a>
+<button class="md:hidden text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Grand hotel lobby with elegant decor" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(61,52,43,0.8)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfp9driAxhsKWv4d4exMQ0abgs4iTJMzipPZ59PRHBsPXyT9_ZhiXYDYklu4ETKjxAOkF-j1kb1IXQVD1DJikQhqC79WoJBlRutVUKTbBDzlpY6wrVVivvbBljNLFgGIQbT-3ZOJgZGaJSFibihub5y6eBuSVTeKDCEkxlcD-7xRuJr1IKPOQEhgkQ-lURsu-edXOzuHXTLHZ5HomX2HITMezmC5vnujLktimQVar49fJLoOTmITKjDe9uSELgrMu-hFCTyosXyuw');"></div>
+<div class="relative h-full flex items-center justify-center text-center px-4">
+<div class="max-w-4xl">
+<span class="text-primary font-bold tracking-[0.3em] uppercase mb-6 block text-sm sm:text-base">Refined Hospitality</span>
+<h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight tracking-tight">
+                        Where Comfort Meets <br/><span class="text-primary italic font-serif">Distinction</span>
+                    </h1>
+<p class="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                        A sanctuary of elegance and personalized service. Experience refined hospitality in the heart of the city.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-primary text-white px-8 py-4 rounded-lg font-bold text-lg hover:brightness-110 transition-all shadow-xl">
+                            Explore Our Suites
+                        </button>
+<button class="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/20 transition-all">
+                            View Gallery
+                        </button>
+</div>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
+<span class="material-symbols-outlined text-4xl">expand_more</span>
+</div>
+</section>
+<!-- About Us & Heritage Section -->
+<section class="py-24 px-4 bg-background-light dark:bg-background-dark">
+<div class="max-w-7xl mx-auto">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="order-2 lg:order-1 space-y-8">
+<div class="inline-flex items-center gap-2 text-primary">
+<span class="h-px w-12 bg-primary"></span>
+<span class="font-bold uppercase tracking-widest text-sm">Our Promise</span>
+</div>
+<h2 class="text-4xl md:text-5xl font-black leading-tight">Excellence in Every Detail</h2>
+<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                            At Grand Stay Hotel, we believe every stay should be more than just a night away. From our personalized welcome to our commitment to your comfort, we create experiences that nurture, delight, and inspire.
+                        </p>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-2">
+<h4 class="text-primary text-3xl font-bold">5 Star</h4>
+<p class="text-sm font-semibold uppercase tracking-wider opacity-70">Luxury Rating</p>
+</div>
+<div class="space-y-2">
+<h4 class="text-primary text-3xl font-bold">24/7</h4>
+<p class="text-sm font-semibold uppercase tracking-wider opacity-70">Concierge Service</p>
+</div>
+</div>
+<button class="group flex items-center gap-3 font-bold text-primary hover:gap-5 transition-all">
+                            Discover our story <span class="material-symbols-outlined">arrow_right_alt</span>
+</button>
+</div>
+<div class="order-1 lg:order-2 grid grid-cols-2 gap-4">
+<div class="space-y-4">
+<div class="h-64 rounded-xl bg-cover bg-center shadow-2xl" data-alt="Luxury hotel exterior" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEpqGgqSjXVxmM7ldyC1_IuS7kn7x1On9Y7-Cjin3saY5Jv71so3iqXg1vqZVO81VuRKmoRNUc4UTrEjGC1c56Sko5DMVLivuZDqSdhoDsu4l5W8C6Ug2I2Ar4hmkZLqlvqbkTgl4qzpv6kF6zrGOUj0U_4aXyp0R1XZbN2FjvPSOtLYpssfNJxiTrw9BbnqQTZRQiutzKzB9MoPQWk0HrfbBsLKhbu7Q4HSnvsBj5szrj3ec6y9tdEEzrIwaML8o_icoM_KdMWks');"></div>
+<div class="h-48 rounded-xl bg-cover bg-center shadow-lg" data-alt="Elegant hotel interior details" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDI3PPWbXDdiQD-HAygfFehTh__KnzbAdUxD4p52z2eK3GAj8mVyK_ZsssPTMbNjUXyo7Tt_-xm3fBi6cG4TPj-b9rG-YTLNaoDEvJlckHH-8xuhJpJya4ErZhBUxPHTGQ2YdFzpo89rbjV_8FHVjuOTZcywnYYUaOblDbzR-tjzN7_NAmUqeEt1eCZ7sinOfWKl-ug8Wgf-UhrCkU-TQQLEw550fxhKnSjJgrY3bneLEjE52uE3nLj2wF_9ogXkp2RefEM9I3nvmc');"></div>
+</div>
+<div class="space-y-4 pt-12">
+<div class="h-48 rounded-xl bg-cover bg-center shadow-lg" data-alt="Professional hotel staff" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtvndrtgcx-M2FE1C0qwljgFmDy4jVJuf9l2dhj3IyfAEe3SLEVZAnn0MsvvkOh5jY9wa5_LKFlZR_R7zq8xobn4wmWmoIqDAeVn5UswXv9k4JAOdxrhLEjdnhHOtH6S4NchZCQXeakzn3JpK6LLtjqdhqRNgvMtr3qGgji8cpwDOYz8GmeZkq8MWhrnJqXm3iwVRpC_Yl94DS9w6ts4unIKKWZLjeAhkhNUaTM8NsD5Br2jfyQRFlH-BGrIHkTY_4daYHNEwULdk');"></div>
+<div class="h-64 rounded-xl bg-cover bg-center shadow-2xl" data-alt="Luxurious hotel suite" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCERO6YBEwftCQXqAatYDmaBwjBKYk0z54jMscceVy3upZUd5CptfwhBrRpwzYOTqUD6H79ChgYJphC5Uwm1H3JJ1LPAEy5DUUKf5_76Uznjof_TkyM8JOMPVaSKcKvubNO9d6NpN2HwOWm2DJU665ety6ErILrKiMWgAibxMPv1MsJJvbyDUwC7aayiIvEimbeg0dTD09txTX1MME91Bd4vqvhU2TyM_ik2C7KKQ5NEKbLWPYBRL74nERg4EUE-zqAKj9lr8O8L1I');"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Amenities Grid -->
+<section class="py-24 bg-primary/5 dark:bg-primary/5 border-y border-primary/10 px-4">
+<div class="max-w-7xl mx-auto text-center mb-16">
+<h2 class="text-3xl md:text-4xl font-black mb-4">What Awaits You</h2>
+<p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">From luxurious suites to world-class amenities, discover the experiences that make Grand Stay exceptional.</p>
+</div>
+<div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+<!-- Amenity 1 -->
+<div class="group bg-white dark:bg-background-dark p-8 rounded-xl shadow-sm border border-transparent hover:border-primary/30 transition-all text-center">
+<div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">spa</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Tranquil Wellness Spa</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                        Escape to our serene spa sanctuary with signature treatments designed to rejuvenate body and mind.
+                    </p>
+<a class="text-primary text-xs font-bold uppercase tracking-widest border-b-2 border-primary/20 group-hover:border-primary transition-all pb-1" href="#">Explore Spa</a>
+</div>
+<!-- Amenity 2 -->
+<div class="group bg-white dark:bg-background-dark p-8 rounded-xl shadow-sm border border-transparent hover:border-primary/30 transition-all text-center">
+<div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">restaurant</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Fine Dining Experience</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                        Savor exquisite flavors at our award-winning restaurant featuring locally-sourced seasonal cuisine.
+                    </p>
+<a class="text-primary text-xs font-bold uppercase tracking-widest border-b-2 border-primary/20 group-hover:border-primary transition-all pb-1" href="#">Reserve Table</a>
+</div>
+<!-- Amenity 3 -->
+<div class="group bg-white dark:bg-background-dark p-8 rounded-xl shadow-sm border border-transparent hover:border-primary/30 transition-all text-center">
+<div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">pool</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Rooftop Oasis</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                        Unwind at our stunning rooftop pool with panoramic city views and exclusive cabana service.
+                    </p>
+<a class="text-primary text-xs font-bold uppercase tracking-widest border-b-2 border-primary/20 group-hover:border-primary transition-all pb-1" href="#">Learn More</a>
+</div>
+</div>
+</section>
+<!-- Newsletter CTA -->
+<section class="py-20 px-4">
+<div class="max-w-5xl mx-auto bg-background-dark text-white rounded-3xl p-8 md:p-16 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+<div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+<div>
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Join Our Community</h2>
+<p class="text-slate-400 mb-0">Subscribe to receive exclusive offers, special packages, and be the first to know about upcoming events.</p>
+</div>
+<form class="flex flex-col sm:flex-row gap-4">
+<input class="bg-white/5 border border-white/10 rounded-lg px-4 py-3 flex-1 focus:outline-none focus:border-primary transition-colors text-white" placeholder="Your Email Address" type="email"/>
+<button class="bg-primary text-white font-bold px-8 py-3 rounded-lg hover:brightness-110 transition-all">Subscribe</button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background-light dark:bg-background-dark border-t border-primary/10 py-16 px-4">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined text-2xl">apartment</span>
+</div>
+<h2 class="text-lg font-extrabold uppercase tracking-tighter">Grand Stay</h2>
+</div>
+<p class="text-sm text-slate-500 leading-relaxed">Where comfort meets distinction. Your home away from home in the heart of the city.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">share</span>
+</a>
+<a class="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">camera</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold mb-6 uppercase tracking-widest text-xs">The Hotel</h4>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Our Suites</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Signature Rooms</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Dining Options</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Events &amp; Meetings</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 uppercase tracking-widest text-xs">Wellness</h4>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Grand Stay Spa</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Fitness Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Rooftop Pool</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Personal Training</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 uppercase tracking-widest text-xs">Contact</h4>
+<ul class="space-y-4 text-sm text-slate-500">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                        456 Heritage Avenue, City Center
+                    </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">call</span>
+                        +1 (555) 789-0123
+                    </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">mail</span>
+                        stay@grandstayhotel.com
+                    </li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto pt-16 mt-16 border-t border-primary/10 flex flex-col md:flex-row justify-between gap-6 text-xs text-slate-400 font-medium">
+<p>© 2026 Grand Stay Hotel. All rights reserved. Powered by Chiron-AI.</p>
+<div class="flex gap-8">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Sitemap</a>
+</div>
+</div>
+</footer>
+<!-- Floating Concierge Chat Button -->
+<div class="fixed bottom-8 right-8 z-[100] group">
+<div class="absolute bottom-full right-0 mb-4 scale-0 group-hover:scale-100 transition-all origin-bottom-right duration-300">
+<div class="bg-white dark:bg-background-dark shadow-2xl rounded-2xl p-4 border border-primary/20 w-64">
+<p class="text-sm font-bold mb-2">Concierge Services</p>
+<p class="text-xs text-slate-500 mb-4">Welcome to Grand Stay Hotel. How may we assist you today?</p>
+<a href="index.html" class="block w-full bg-primary text-white text-xs font-bold py-2 rounded-lg hover:brightness-110 text-center">Start Chat</a>
+</div>
+</div>
+<button class="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all relative overflow-hidden group">
+<span class="material-symbols-outlined text-3xl">chat_bubble</span>
+<div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 rounded-full transition-transform duration-500"></div>
+<span class="absolute -top-1 -right-1 flex h-4 w-4">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+<span class="relative inline-flex rounded-full h-4 w-4 bg-white/80"></span>
+</span>
+</button>
+</div>
+</body></html>
