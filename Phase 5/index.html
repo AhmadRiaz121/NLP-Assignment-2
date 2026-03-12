@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grand Stay Hotel &middot; Virtual Concierge</title>
+  <title>Grand Stay Hotel &middot; Virtual Guide</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset ──────────────────────────────────────────────────────────────── */
+    /*  Reset  */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -551,7 +551,7 @@
     $sendBtn.disabled = !canSend || !$input.value.trim();
   }
 
-  // ── Stats ───────────────────────────────────────────────────────────────────
+  // ── Stats
   function updateStats(sid, turns, intent, memory) {
     $statsCard.style.display = '';
     $sId.textContent     = sid ? sid.slice(0, 8) : '\u2014';
@@ -560,7 +560,7 @@
     $sMemory.textContent = (memory ?? 0) + ' msgs';
   }
 
-  // ── Bubbles ─────────────────────────────────────────────────────────────────
+  // ── Bubbles 
   function showMessages() {
     $welcome.style.display  = 'none';
     $messages.style.display = '';
@@ -624,7 +624,7 @@
       .replace(/"/g, '&quot;').replace(/\n/g, '<br>');
   }
 
-  // ── WebSocket ───────────────────────────────────────────────────────────────
+  // ── WebSocket
   function connect() {
     if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
     setStatus('connecting');
@@ -643,7 +643,7 @@
         ws.send(JSON.stringify({ message: '__WARMUP__' }));
 
       } else if (msg.type === 'warmup_complete') {
-        // silently acknowledge
+        
 
       } else if (msg.type === 'token') {
         setStatus('responding');
